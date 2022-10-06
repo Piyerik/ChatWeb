@@ -1,0 +1,30 @@
+:root {
+  --chatbox-height: 30px;
+}
+
+#container {
+  font-family: sans-serif;
+  margin: 20px;
+}
+
+#chatbox {
+  margin-right: 20px;
+  width: 80%;
+  height: var(--chatbox-height);
+  padding: 5px;
+  font-size: 20px;
+  overflow-y: scroll;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  resize: none;
+  float: left;
+}
+
+#send {
+  height: var(--chatbox-height)
+}
+
+#messages p:hover {
+  background-color: rgb(233, 233, 200);
+}
