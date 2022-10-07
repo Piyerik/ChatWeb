@@ -275,15 +275,15 @@ app.post("/users", async (req, res) => {
       message: "Username may not be longer than 32 characters in length.",
     });
 
-  const token = crypto.randomBytes(16).toString("hex");
-  const salt = crypto.randomBytes(16).toString("hex");
-  const hash = crypto.scryptSync(body.password, salt, 64).toString("hex");
-
   const userAlready = await db.user.findUnique({
     where: { username: body.username },
   });
   if (userAlready)
     return res.status(409).send({ message: "Username already exists." });
+
+  const token = crypto.randomBytes(16).toString("hex");
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hash = crypto.scryptSync(body.password, salt, 64).toString("hex");
 
   const user = await db.user.create({
     data: {
