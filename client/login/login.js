@@ -1,46 +1,43 @@
-async function main() {
-  const login = document.getElementById('login');
-  const error = document.getElementById('error');
+const api = 'http://192.168.0.104:3000';
 
-  const registerInput = async () => {
-    const username = document.getElementById('username').value;
-    
-    if (username.length == 0) {
-      error.innerHTML = 'Username is required.';
-      return;
-    }
-    else if (username.length > 32) {
-      error.innerHTML = 'Username cannot be greater than 32 characters.';
-      return;
-    }
+const login = document.getElementById("login");
+const error = document.getElementById("error");
 
-    const password = document.getElementById('password').value;
-    if (password.length == 0) {
-      error.innerHTML = 'Password is required.';
-      return;
-    }
+const registerInput = async () => {
+  const username = document.getElementById("username").value;
 
-    const userReq = await fetch('http://localhost:3000/user-auth', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, password })
-    });
-    
-    const user = await userReq.json();
-    if (!userReq.ok) {
-      error.innerHTML = user.message;
-      return;
-    }
+  if (username.length == 0) {
+    error.innerHTML = "Username is required.";
+    return;
+  } else if (username.length > 32) {
+    error.innerHTML = "Username cannot be greater than 32 characters.";
+    return;
+  }
 
-    document.cookie = `token=${user.token}; path=/`;
-    document.cookie = `username=${username}; path=/`;
-    document.cookie = `id=${user.id}; path=/`;
-    window.location.href='/';
-  }   
+  const password = document.getElementById("password").value;
+  if (password.length == 0) {
+    error.innerHTML = "Password is required.";
+    return;
+  }
 
-  login.addEventListener('click', async () => registerInput());
-}
+  const userReq = await fetch(`${api}/user-auth`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  });
 
-main();
+  const user = await userReq.json();
+  if (!userReq.ok) {
+    error.innerHTML = user.message;
+    return;
+  }
+
+  document.cookie = `token=${user.token}; path=/`;
+  document.cookie = `username=${username}; path=/`;
+  document.cookie = `id=${user.id}; path=/`;
+  window.location.href = "/";
+};
+
+login.addEventListener("click", async () => registerInput());

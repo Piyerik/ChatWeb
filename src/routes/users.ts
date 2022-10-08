@@ -36,6 +36,7 @@ export default function (app: Express) {
         salt,
         password: hash,
         username: body.username,
+        createdAt: BigInt(Date.now())
       },
     });
 

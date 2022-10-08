@@ -1,86 +1,96 @@
-async function main() {
-  const stringified = '{"' + document.cookie.replaceAll('=', '":"').replaceAll('; ', '", "') + '"}';
-  const cookies = JSON.parse(stringified);
+const api = "http://192.168.0.104:3000";
 
-  document.getElementById('username').value = cookies.username;
+const stringified =
+  '{"' + document.cookie.replaceAll("=", '":"').replaceAll("; ", '", "') + '"}';
+const cookies = JSON.parse(stringified);
 
-  const update = document.getElementById('update');
-  const deleteBtn = document.getElementById('delete');
+document.getElementById("username").value = cookies.username;
 
-  update.addEventListener('click', async () => {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const error = document.getElementById('error');
+const update = document.getElementById("update");
+const deleteBtn = document.getElementById("delete");
+const logout = document.getElementById('logout');
 
-    if (username.length > 32) {
-      error.innerHTML = 'Username may not be longer than 32 characters in length.';
-      return;
-    } else if (username.length < 2) {
-      error.innerHTML = 'Username must be at least 2 characters in length.';
-      return;
-    }
+update.addEventListener("click", async () => {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  const error = document.getElementById("error");
 
-    const changeData = {};
-    if (username !== cookies.username) changeData.username = username;
-    if (password) changeData.password = password;
+  if (username.length > 32) {
+    error.innerHTML =
+      "Username may not be longer than 32 characters in length.";
+    return;
+  } else if (username.length < 2) {
+    error.innerHTML = "Username must be at least 2 characters in length.";
+    return;
+  }
 
-    if (!changeData.username && !changeData.password) return;
+  const changeData = {};
+  if (username !== cookies.username) changeData.username = username;
+  if (password) changeData.password = password;
 
-    const confirmation = document.getElementById('confirmation').value;
-    const req = await fetch('http://localhost:3000/users', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        auth: {
-          username: cookies.username,
-          password: confirmation
-        },
-        ...changeData
-      })
-    });
+  if (!changeData.username && !changeData.password) return;
 
-    console.log(req.status);
-    if (req.status !== 204) {
-      const output = await req.json();
-      error.innerHTML = output.message;
-      return;
-    }
-
-    alert('Successfully updated!');
-    document.getElementById('password').value = '';
-    document.getElementById('confirmation').value = '';
-    error.innerHTML = '';
-
-  });
-
-  deleteBtn.addEventListener('click', async () => {
-    const confirmation = document.getElementById('confirmation').value;
-    const random = 'xxxxxx'.replaceAll(/x/g, () => Math.floor(Math.random() * 6));
-    const doubleConfirmation = prompt(`You requested to delete your account. Re-enter the confirmation code to proceed.\n${random}`);
-    if (doubleConfirmation !== random) return alert('Confirmation code does not match.');
-
-    const req = await fetch('http://localhost:3000/users', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+  const confirmation = document.getElementById("confirmation").value;
+  const req = await fetch(`${api}/users`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      auth: {
         username: cookies.username,
-        password: confirmation
-      })
-    });
-
-    if (req.status !== 204) {
-      const output = await req.json();
-      error.innerHTML = output.message;
-      return;
-    }
-
-    alert('Account deleted.');
-    window.location.href = '/signup';
+        password: confirmation,
+      },
+      ...changeData,
+    }),
   });
-}
 
-main();
+  if (req.status !== 204) {
+    const output = await req.json();
+    error.innerHTML = output.message;
+    return;
+  }
+
+  alert("Successfully updated!");
+  document.getElementById("password").value = "";
+  document.getElementById("confirmation").value = "";
+  error.innerHTML = "";
+});
+
+deleteBtn.addEventListener("click", async () => {
+  const confirmation = document.getElementById("confirmation").value;
+  const random = "xxxxxx".replaceAll(/x/g, () => Math.floor(Math.random() * 6));
+  const doubleConfirmation = prompt(
+    `You requested to delete your account. Re-enter the confirmation code to proceed.\n${random}`
+  );
+  if (doubleConfirmation !== random)
+    return alert("Confirmation code does not match.");
+
+  const req = await fetch(`${api}/users`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: cookies.username,
+      password: confirmation,
+    }),
+  });
+
+  if (req.status !== 204) {
+    const output = await req.json();
+    error.innerHTML = output.message;
+    return;
+  }
+
+  alert("Account deleted.");
+  window.location.href = "/signup";
+});
+
+logout.addEventListener('click', () => {
+  document.cookie = 'token=;path=/';
+  document.cookie = 'id=;path=/';
+  document.cookie = 'username=;path=/';
+
+  window.location.href = '/login';
+})

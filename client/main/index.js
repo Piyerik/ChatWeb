@@ -1,4 +1,4 @@
-const api = 'http://localhost:3000';
+const api = 'http://192.168.0.104:3000';
 
 async function main() {
   const stringified = '{"' + document.cookie.replaceAll('=', '":"').replaceAll('; ', '", "') + '"}';
@@ -7,51 +7,7 @@ async function main() {
   const id = +cookies.id;
 
   const container = document.getElementById('messages');
-  const socket = new WebSocket('ws://localhost:3000');
-
-  // wait to connect
-  let cont = false;
-  socket.addEventListener('open', () => cont = true);
-  await (async () => new Promise(resolve => {
-    const interval = setInterval(() => {
-      if (cont === true) {
-        resolve();
-        clearInterval(interval);
-      }
-    }, 100)
-  }))();
-
-  let date = Date.now();
-  const latestMessagesReq = await fetch(`http://localhost:3000/messages/${date}`);
-  const latestMessages = (await latestMessagesReq.json()).messages;
-  for (const message of latestMessages) {
-    const msg = document.createElement('p');
-    if (message.authorId === id) msg.setAttribute('data-self', true);
-    msg.setAttribute('data-id', message.id);
-    msg.innerHTML = `${message.author.username}: ${message.content.replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('\n', '<br>')}`;
-    container.appendChild(msg);
-  }
-  date = latestMessages[0]?.createdAt || Date.now();
-
-  window.scrollTo(0, document.body.scrollHeight);
-
-  document.addEventListener('scroll', async () => {
-    if (window.scrollY !== 0) return;
-
-    const messagesReq = await fetch(`http://localhost:3000/messages/${date}`);
-    const messages = (await messagesReq.json()).messages;
-
-    const topMessage = document.getElementById('messages').firstElementChild;
-    for (const message of messages) {
-      const msg = document.createElement('p');
-      if (message.authorId === id) msg.setAttribute('data-self', true);
-      msg.setAttribute('data-id', message.id);
-      msg.innerHTML = `${message.author.username}: ${message.content.replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('\n', '<br>')}`;
-      topMessage.before(msg);
-    }
-    
-    date = messages[0]?.createdAt || Date.now();
-  })
+  const socket = new WebSocket('ws://192.168.0.104:3000');
 
   socket.addEventListener('message', async event => {
     const msg = JSON.parse(await event.data.text());
@@ -72,13 +28,50 @@ async function main() {
     }
   });
 
+  socket.addEventListener('close', () => {
+    alert('Disconnected from server. Refresh to reconnect.');
+  });
+
+  window.addEventListener('offline', () => {
+    alert('You are offline. Refresh to reconnect.');
+  })
+
+  let date = Date.now();
+  const latestMessagesReq = await fetch(`${api}/messages/${date}`);
+  const latestMessages = (await latestMessagesReq.json()).messages;
+  for (const message of latestMessages) {
+    const msg = document.createElement('p');
+    if (message.authorId === id) msg.setAttribute('data-self', true);
+    msg.setAttribute('data-id', message.id);
+    msg.innerHTML = `${message.author.username}: ${message.content.replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('\n', '<br>')}`;
+    container.appendChild(msg);
+  }
+  date = latestMessages[0]?.createdAt || 0;
+
+  window.scrollTo(0, document.body.scrollHeight);
+
+  document.addEventListener('scroll', async () => {
+    if (window.scrollY !== 0) return;
+
+    const messagesReq = await fetch(`${api}/messages/${date}`);
+    const messages = (await messagesReq.json()).messages;
+
+    const topMessage = document.getElementById('messages').firstElementChild;
+    for (const message of messages) {
+      const msg = document.createElement('p');
+      if (message.authorId === id) msg.setAttribute('data-self', true);
+      msg.setAttribute('data-id', message.id);
+      msg.innerHTML = `${message.author.username}: ${message.content.replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('\n', '<br>')}`;
+      topMessage.before(msg);
+    }
+    
+    date = messages[0]?.createdAt || 0;
+  })
+
   const sendMessage = async () => {
-    window.scrollTo(0, document.body.scrollHeight);
     const value = document.getElementById('chatbox').value;
     if (value.replaceAll(' ', '').replaceAll('\n', '').length == 0) return;
     document.getElementById('chatbox').value = "";
-
-    if (socket.readyState !== WebSocket.OPEN) return window.location.href = '/login';
 
     socket.send(JSON.stringify({
       token,
@@ -103,7 +96,7 @@ async function main() {
   });
 
 
-  document.getElementById('send').addEventListener('click', async() => sendMessage(user));
+  document.getElementById('send').addEventListener('click', async() => sendMessage());
 
   document.body.addEventListener('dblclick', event => {
     if (!event.target.parentNode.id === 'messages') return;
