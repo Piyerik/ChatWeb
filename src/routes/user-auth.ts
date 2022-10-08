@@ -5,7 +5,7 @@ import db from "../db";
 export default function (app: Express) {
   app.post("/user-auth", async (req, res) => {
     const { body } = req;
-    if (!(body.username && body.password))
+    if (!('username' in body && 'password' in body))
       return res.status(400).send({
         message: "Request must have properties `username` and `password`.",
       });

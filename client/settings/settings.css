@@ -5,6 +5,11 @@
   font-family: sans-serif;
 }
 
+#delete {
+  background-color: red;
+  color: white;
+}
+
 button {
   cursor: pointer;
 }

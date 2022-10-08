@@ -1,7 +1,6 @@
 const api = 'http://localhost:3000';
 
 async function main() {
-
   const stringified = '{"' + document.cookie.replaceAll('=', '":"').replaceAll('; ', '", "') + '"}';
   const cookies = JSON.parse(stringified);
   const { token, username } = cookies;
