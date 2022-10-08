@@ -7,7 +7,7 @@ async function main() {
   const id = +cookies.id;
 
   const container = document.getElementById('messages');
-  const socket = new WebSocket(`ws://chatweb-production.up.railway.app`);
+  const socket = new WebSocket(`wss://chatweb-production.up.railway.app`);
 
   socket.addEventListener('message', async event => {
     const msg = JSON.parse(await event.data.text());
