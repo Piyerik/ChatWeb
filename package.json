@@ -11,7 +11,6 @@
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "tslib": "^2.4.0",
-    "typescript": "^4.8.4",
     "ws": "^8.9.0"
   },
   "scripts": {
@@ -24,6 +23,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "devDependencies": {
-    "prisma": "3.15.2"
+    "prisma": "3.15.2",
+    "typescript": "^4.8.4"
   }
 }
