@@ -1,13 +1,13 @@
 const api = 'https://chatweb-production.up.railway.app';
+let socket;
+let connectInterval;
 
-async function main() {
-  const stringified = '{"' + document.cookie.replaceAll('=', '":"').replaceAll('; ', '", "') + '"}';
-  const cookies = JSON.parse(stringified);
-  const { token, username } = cookies;
-  const id = +cookies.id;
+async function connect() {
+  socket = new WebSocket(`wss://chatweb-production.up.railway.app`);
 
-  const container = document.getElementById('messages');
-  const socket = new WebSocket(`wss://chatweb-production.up.railway.app`);
+  socket.addEventListener('open', () => {
+    clearInterval(connectInterval);
+  })
 
   socket.addEventListener('message', async event => {
     const msg = JSON.parse(await event.data.text());
@@ -35,12 +35,25 @@ async function main() {
   });
 
   socket.addEventListener('close', () => {
-    alert('Disconnected from server. Refresh to reconnect.');
+    connectInterval = setInterval(() => {
+      connect();
+    }, 3000);
   });
 
   window.addEventListener('offline', () => {
-    alert('You are offline. Refresh to reconnect.');
-  })
+    connectInterval = setInterval(() => {
+      connect();
+    }, 3000);
+  });
+}
+
+async function main() {
+  const stringified = '{"' + document.cookie.replaceAll('=', '":"').replaceAll('; ', '", "') + '"}';
+  const cookies = JSON.parse(stringified);
+  const { token, username } = cookies;
+  const id = +cookies.id;
+
+  const container = document.getElementById('messages');
 
   let date = Date.now();
   const latestMessagesReq = await fetch(`${api}/messages/${date}`);
@@ -149,4 +162,5 @@ async function main() {
   });
 }
 
+connect();
 main();
