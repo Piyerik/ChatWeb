@@ -4,6 +4,9 @@ import db from "../db";
 export default function (wss: Server<WebSocket>) {
   wss.on("connection", (ws) => {
     ws.on("message", async (data) => {
+
+      if (data.toString() === '9') return ws.send(Buffer.from('10'));
+
       let msg: { token: string; request: string; body?: any };
       try {
         msg = JSON.parse(data.toString());
