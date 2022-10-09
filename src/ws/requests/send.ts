@@ -17,6 +17,14 @@ export default async function (
       requestData: data,
     });
 
+  if (body.content.length > 2000)
+    return ws.send({
+      code: 400,
+      error: true,
+      message: "Message exceeds 2000 character limit.",
+      requestData: data,
+    });
+
   const messageData = {
     authorId: user.id,
     content: body.content,

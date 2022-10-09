@@ -73,6 +73,7 @@ async function main() {
   const sendMessage = async () => {
     const value = document.getElementById('chatbox').value;
     if (value.replaceAll(' ', '').replaceAll('\n', '').length == 0) return;
+    if (value.length > 2000) return alert('Message exceeds 2000 character limit.');
     document.getElementById('chatbox').value = "";
 
     socket.send(JSON.stringify({
@@ -124,6 +125,8 @@ async function main() {
 
       return;
     }
+
+    if (newContent.length > 2000) return alert('Message exceeds 2000 character limit.');
 
     element.innerHTML = `${username}: ${newContent}`;
 
