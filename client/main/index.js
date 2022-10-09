@@ -85,6 +85,8 @@ async function main() {
     msg.setAttribute('data-self', true);
     msg.innerHTML = `${username}: ${value.replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('\n', '<br>')}`;
     container.appendChild(msg);
+
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   document.getElementById('chatbox').addEventListener('keypress', async key => {
