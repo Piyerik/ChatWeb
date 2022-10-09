@@ -24,7 +24,7 @@ export default function(app: Express) {
           lt: before,
         },
       },
-      include: { author: true },
+      select: { author: { select: { username: true }}}
     });
   
     return res.send(
