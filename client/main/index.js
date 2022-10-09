@@ -27,6 +27,10 @@ async function main() {
     } else if (msg.type === 'delete') {
       const msgDOM = document.querySelector(`[data-id='${msg.id}'`);
       msgDOM.parentNode.removeChild(msgDOM);
+    } else if (msg.type === 'send-response') {
+      const msgDOM = document.querySelector(`[data-temp-id='${msg.temporaryId}'`);
+      msgDOM.setAttribute('data-id', msg.id);
+      msgDOM.removeAttribute('data-temp-id');
     }
   });
 
@@ -76,16 +80,20 @@ async function main() {
     if (value.length > 2000) return alert('Message exceeds 2000 character limit.');
     document.getElementById('chatbox').value = "";
 
+    const temporaryId = Math.floor(Math.random() * 1000);
+
     socket.send(JSON.stringify({
       token,
       request: 'send',
       body: {
-        content: value
+        content: value,
+        temporaryId
       }
     }));
 
     const msg = document.createElement('p');
     msg.setAttribute('data-self', true);
+    msg.setAttribute('data-temp-id', temporaryId);
     msg.innerHTML = `${username}: ${value.replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('\n', '<br>')}`;
     container.appendChild(msg);
 
