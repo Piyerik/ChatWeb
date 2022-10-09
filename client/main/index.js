@@ -19,6 +19,8 @@ async function main() {
       msgDOM.setAttribute('data-id', msg.id);
       msgDOM.innerHTML = `${msg.username}: ${msg.content}`;
       container.appendChild(msgDOM);
+
+      window.scrollTo(0, document.body.scrollHeight);
     } else if (msg.type === 'edit') {
       const msgDOM = document.querySelector(`[data-id='${msg.id}'`);
       msgDOM.innerHTML = `${msg.username}: ${msg.content}`;
