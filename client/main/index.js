@@ -21,7 +21,7 @@ async function main() {
       msgDOM.innerHTML = `${msg.username}: ${msg.content}`;
       container.appendChild(msgDOM);
 
-      window.scrollTo(0, document.body.scrollHeight);
+      messages.scrollTo(0, messages.scrollHeight);
     } else if (msg.type === 'edit') {
       const msgDOM = document.querySelector(`[data-id='${msg.id}'`);
       msgDOM.innerHTML = `${msg.username}: ${msg.content}`;
@@ -46,6 +46,7 @@ async function main() {
   let date = Date.now();
   const latestMessagesReq = await fetch(`${api}/messages/${date}`);
   const latestMessages = (await latestMessagesReq.json()).messages;
+
   for (const message of latestMessages) {
     const msg = document.createElement('p');
     if (message.authorId === id) msg.setAttribute('data-self', true);
@@ -55,13 +56,14 @@ async function main() {
   }
   date = latestMessages[0]?.createdAt || 0;
 
-  window.scrollTo(0, document.body.scrollHeight);
+  messages.scrollTo(0, messages.scrollHeight);
 
   document.addEventListener('scroll', async () => {
     if (window.scrollY !== 0) return;
 
     const messagesReq = await fetch(`${api}/messages/${date}`);
     const messages = (await messagesReq.json()).messages;
+    if (messages.length == 0) return;
 
     const topMessage = document.getElementById('messages').firstElementChild;
     for (const message of messages) {
@@ -71,6 +73,9 @@ async function main() {
       msg.innerHTML = `${message.author.username}: ${message.content.replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('\n', '<br>')}`;
       topMessage.before(msg);
     }
+
+    const lastLocation = topMessage.getBoundingClientRect().y;
+    messages.scrollTo(0, lastLocation - 20);
     
     date = messages[0]?.createdAt || 0;
   })
@@ -98,7 +103,7 @@ async function main() {
     msg.innerHTML = `${username}: ${value.replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('\n', '<br>')}`;
     container.appendChild(msg);
 
-    window.scrollTo(0, document.body.scrollHeight);
+    messages.scrollTo(0, messages.scrollHeight);
   }
 
   document.getElementById('chatbox').addEventListener('keypress', async key => {
@@ -119,7 +124,7 @@ async function main() {
 
     if (socket.readyState !== WebSocket.OPEN) return window.location.href = '/login';
 
-    const newContent = prompt('Enter new message content');
+    const newContent = prompt('Enter new message content', element.innerHTML.slice(username.length + 2));
     if (newContent == null) return;
 
     if (newContent.length == 0) {

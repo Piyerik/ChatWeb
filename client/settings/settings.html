@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="/main.css">
     <link rel="stylesheet" href="/settings/settings.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,20 +9,32 @@
     <title>Settings</title>
 </head>
 <body>
-  <h1>Account Settings</h1>
-  <label for="username">Username: </label>
-  <input type="text" id="username">
-  <br><br>
-  <label for="password">New Password: </label>
-  <input type="password" id="password">
-  <br><br>
-  <button id="update">Update changes</button>
-  <button id="logout">Log out</button>
-  <button id="delete">Delete account</button>
-  <br><br>
-  <label for="confirmation">Password: </label>
-  <input type="password" id="confirmation">
-  <p id="error"></p>
+  <header>
+    <h1>ChatWeb</h1>
+    <nav>
+      <ul>
+        <li><a href="/settings">Settings</a></li>
+        <li><a href="/">Home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="container">
+    <h1>Account Settings</h1>
+    <label for="username">Username: </label>
+    <input type="text" id="username">
+    <br><br>
+    <label for="password">New Password: </label>
+    <input type="password" id="password">
+    <br><br>
+    <button id="update">Update changes</button>
+    <button id="logout">Log out</button>
+    <button id="delete">Delete account</button>
+    <br><br>
+    <label for="confirmation">Password: </label>
+    <input type="password" id="confirmation">
+    <p id="error"></p>
+  </div>
 
   <script src="/api.js"></script>
   <script src="/settings/settings.js"></script>

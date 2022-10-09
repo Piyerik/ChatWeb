@@ -10,6 +10,7 @@ export default function(app: Express) {
       if (user)
         return res.sendFile(path.join(__dirname, "../../client/main/index.html"));
     }
+    
     res.redirect("/login");
   });
 }

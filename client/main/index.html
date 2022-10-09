@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel=stylesheet href="/main/index.css">
+    <link rel="stylesheet" href="/main.css">
+    <link rel=stylesheet href="/main/index.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
 </head>
 <body>
+  <header>
+    <div id="logo">
+      <img src="/imgs/web.png" alt="logo" width="60" height="60">
+      <h1>ChatWeb</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="/settings">Settings</a></li>
+        <li><a href="/">Home</a></li>
+      </ul>
+    </nav>
+  </header>
   <div id="container">
-    <h1>Chat</h1>
     <div id="messages"></div>
     <br>
     <textarea id="chatbox" placeholder="Message chat"> </textarea>
     <button id="send">Send</button>
   </div>
-
-  <a href="/settings">Settings</a>
 
   <script src="/api.js"></script>
   <script src="/main/index.js"></script>

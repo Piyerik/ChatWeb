@@ -1,5 +1,11 @@
 body {
   font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#container {
+  margin: 20px;
 }
 
 #error {
@@ -12,8 +18,9 @@ body {
 #delete {
   background-color: red;
   color: white;
+  cursor: pointer;
 }
 
-button {
-  cursor: pointer;
+#delete:hover {
+  background-color: rgb(202, 2, 2);
 }

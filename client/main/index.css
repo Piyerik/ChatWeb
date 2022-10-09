@@ -2,11 +2,6 @@
   --chatbox-height: 30px;
 }
 
-#container {
-  font-family: sans-serif;
-  margin: 20px;
-}
-
 #chatbox {
   margin-right: 20px;
   width: 80%;
@@ -15,7 +10,7 @@
   font-size: 20px;
   overflow-y: scroll;
   outline: none;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 5px;
   resize: none;
   float: left;
@@ -25,12 +20,16 @@
   height: var(--chatbox-height)
 }
 
-#messages p:hover {
-  background-color: rgb(233, 233, 200);
+#messages {
+  overflow-y: scroll;
+  height: 70vh;
+  width: 100%;
 }
 
-a {
-  position: absolute;
-  top: 0;
-  right: 5px;
+#messages p {
+  padding: 2px;
+}
+
+#messages p:hover {
+  background-color: rgb(233, 233, 200);
 }

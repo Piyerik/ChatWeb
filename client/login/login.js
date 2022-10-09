@@ -1,22 +1,9 @@
-const login = document.getElementById("login");
+const login = document.getElementById("submit");
 const error = document.getElementById("error");
 
 const registerInput = async () => {
   const username = document.getElementById("username").value;
-
-  if (username.length == 0) {
-    error.innerHTML = "Username is required.";
-    return;
-  } else if (username.length > 32) {
-    error.innerHTML = "Username cannot be greater than 32 characters.";
-    return;
-  }
-
-  const password = document.getElementById("password").value;
-  if (password.length == 0) {
-    error.innerHTML = "Password is required.";
-    return;
-  }
+  const password = document.getElementById('password').value;
 
   const userReq = await fetch(`${api}/user-auth`, {
     method: "POST",
