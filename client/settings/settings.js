@@ -91,4 +91,4 @@ logout.addEventListener('click', () => {
   document.cookie = 'username=;path=/';
 
   window.location.href = '/login';
-})
+});

@@ -1,5 +1,5 @@
 :root {
-  --chatbox-height: 30px;
+  --chatbox-height: 33px;
 }
 
 #chatbox {
@@ -16,7 +16,7 @@
   float: left;
 }
 
-#send {
+button {
   height: var(--chatbox-height)
 }
 

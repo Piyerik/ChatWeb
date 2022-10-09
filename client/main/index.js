@@ -5,6 +5,7 @@ async function main() {
   const id = +cookies.id;
 
   const container = document.getElementById('messages');
+  const chatbox = document.getElementById('chatbox');
   const socket = new WebSocket(`ws${secure ? 's' : ''}://${domain}`);
 
   socket.addEventListener('message', async event => {
@@ -84,7 +85,7 @@ async function main() {
     const value = document.getElementById('chatbox').value;
     if (value.replaceAll(' ', '').replaceAll('\n', '').length == 0) return;
     if (value.length > 2000) return alert('Message exceeds 2000 character limit.');
-    document.getElementById('chatbox').value = "";
+    chatbox.value = "";
 
     const temporaryId = Math.floor(Math.random() * 1000);
 
@@ -106,13 +107,20 @@ async function main() {
     messages.scrollTo(0, messages.scrollHeight);
   }
 
-  document.getElementById('chatbox').addEventListener('keypress', async key => {
+  chatbox.addEventListener('keypress', async key => {
     if (key.code !== 'Enter') return;
     if (!key.shiftKey) key.preventDefault();
     else return;
 
     return sendMessage();
   });
+
+  chatbox.addEventListener('input', () => {
+    const chatbox_ = document.getElementById('chatbox');
+    if (chatbox_.scrollHeight > 400) return;
+    chatbox_.style.height = 0;
+    chatbox_.style.height = chatbox.scrollHeight + 'px';
+  })
 
 
   document.getElementById('send').addEventListener('click', async() => sendMessage());
@@ -139,7 +147,7 @@ async function main() {
 
       return;
     }
-
+;
     if (newContent.length > 2000) return alert('Message exceeds 2000 character limit.');
 
     element.innerHTML = `${username}: ${newContent}`;
