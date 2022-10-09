@@ -58,15 +58,15 @@ async function main() {
 
   messages.scrollTo(0, messages.scrollHeight);
 
-  document.addEventListener('scroll', async () => {
-    if (window.scrollY !== 0) return;
+  messages.addEventListener('scroll', async () => {
+    if (messages.scrollTop !== 0) return;
 
     const messagesReq = await fetch(`${api}/messages/${date}`);
-    const messages = (await messagesReq.json()).messages;
-    if (messages.length == 0) return;
+    const _messages = (await messagesReq.json()).messages;
+    if (_messages.length == 0) return;
 
     const topMessage = document.getElementById('messages').firstElementChild;
-    for (const message of messages) {
+    for (const message of _messages) {
       const msg = document.createElement('p');
       if (message.authorId === id) msg.setAttribute('data-self', true);
       msg.setAttribute('data-id', message.id);
