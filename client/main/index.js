@@ -39,12 +39,6 @@ async function connect() {
       connect();
     }, 3000);
   });
-
-  window.addEventListener('offline', () => {
-    connectInterval = setInterval(() => {
-      connect();
-    }, 3000);
-  });
 }
 
 async function main() {
