@@ -75,7 +75,7 @@ async function main() {
     }
 
     const lastLocation = topMessage.getBoundingClientRect().y;
-    messages.scrollTo(0, lastLocation - 20);
+    messages.scrollTo(0, lastLocation - 140);
     
     date = messages[0]?.createdAt || 0;
   })
