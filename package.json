@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node .",
-    "format": "prettier --write src/**.ts"
+    "format": "prettier --write api/**.ts"
   },
   "name": "api",
   "version": "1.0.0",

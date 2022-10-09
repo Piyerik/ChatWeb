@@ -1,5 +1,3 @@
-const api = 'https://chatweb-production.up.railway.app';
-
 const login = document.getElementById("login");
 const error = document.getElementById("error");
 

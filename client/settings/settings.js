@@ -1,5 +1,3 @@
-const api = "https://chatweb-production.up.railway.app";
-
 const stringified =
   '{"' + document.cookie.replaceAll("=", '":"').replaceAll("; ", '", "') + '"}';
 const cookies = JSON.parse(stringified);

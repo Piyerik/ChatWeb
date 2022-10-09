@@ -1,6 +1,3 @@
 # ChatWeb
 
-Create a .env file, and set variables PORT and DATABASE_URL. <br />
-This project uses [PostgreSQL](https://www.postgresql.org/) but may possibly be used with MongoDB. <br />
-
-Also, replace all instances of `const api = X` in the client code to the appropriate API URL.
+ChatWeb is a very basic chat platform. It doesn't have many features currently, but in the future it should become more advanced.<br />

@@ -1,5 +1,3 @@
-const api = 'https://chatweb-production.up.railway.app';
-
 async function main() {
   const stringified = '{"' + document.cookie.replaceAll('=', '":"').replaceAll('; ', '", "') + '"}';
   const cookies = JSON.parse(stringified);
@@ -7,7 +5,7 @@ async function main() {
   const id = +cookies.id;
 
   const container = document.getElementById('messages');
-  const socket = new WebSocket(`wss://chatweb-production.up.railway.app`);
+  const socket = new WebSocket(`ws${secure ? 's' : ''}://${domain}`);
 
   socket.addEventListener('message', async event => {
     const text = await event.data.text();

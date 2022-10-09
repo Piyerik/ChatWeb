@@ -21,7 +21,7 @@ const wss = new WebSocketServer({ server });
 ws_(wss);
 
 (async () => {
-  const routes = fs.readdirSync('./src/routes');
+  const routes = fs.readdirSync('./api/routes');
   for (const route of routes) {
     const fileName = route.slice(0, -3);
     (await import(`./routes/${fileName}`)).default(app);
