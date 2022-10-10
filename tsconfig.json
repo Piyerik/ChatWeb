@@ -2,12 +2,12 @@
   "compilerOptions": {
     "target": "ESNext",
     "outDir": "./dist",
-    "rootDir": "api",
+    "rootDir": "server",
     "module": "CommonJS",
     "strict": true,
     "alwaysStrict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "importHelpers": true
-  }
+  },
 }

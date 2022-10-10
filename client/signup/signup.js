@@ -1,9 +1,11 @@
 const create = document.getElementById("submit");
 const error = document.getElementById("error");
+const inviteRegex = /[a-zA-Z0-9]{6}/;
 
 const registerInput = async () => {
   const username = document.getElementById("username").value;
   const password = document.getElementById('password').value;
+  const invite = document.getElementById('invite').value;
 
   if (username.length > 32) {
     error.innerHTML =
@@ -14,12 +16,17 @@ const registerInput = async () => {
     return;
   }
 
+  if (!inviteRegex.test(invite)) {
+    error.innerHTML = 'Invalid invite code.';
+    return;
+  }
+
   const userReq = await fetch(`${api}/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, invite }),
   });
 
   const user = await userReq.json();
@@ -33,5 +40,3 @@ const registerInput = async () => {
   document.cookie = `id=${user.id}; path=/`;
   window.location.href = "/";
 };
-
-create.addEventListener("click", async () => registerInput());

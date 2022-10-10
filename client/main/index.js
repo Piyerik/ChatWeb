@@ -45,7 +45,12 @@ async function main() {
   })
 
   let date = Date.now();
-  const latestMessagesReq = await fetch(`${api}/messages/${date}`);
+  const latestMessagesReq = await fetch(`${api}/messages/${date}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': token
+    }
+  });
   const latestMessages = (await latestMessagesReq.json()).messages;
 
   for (const message of latestMessages) {
@@ -62,7 +67,12 @@ async function main() {
   messages.addEventListener('scroll', async () => {
     if (messages.scrollTop !== 0) return;
 
-    const messagesReq = await fetch(`${api}/messages/${date}`);
+    const messagesReq = await fetch(`${api}/messages/${date}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': token
+      }
+    });
     const _messages = (await messagesReq.json()).messages;
     if (_messages.length == 0) return;
 
@@ -79,7 +89,7 @@ async function main() {
     messages.scrollTo(0, lastLocation - 140);
     
     date = messages[0]?.createdAt || 0;
-  })
+  });
 
   const sendMessage = async () => {
     const value = document.getElementById('chatbox').value;

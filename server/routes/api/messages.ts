@@ -1,14 +1,13 @@
 import type { Express } from "express";
-import db from '../db';
+import db from '../../db';
 
 export default function(app: Express) {
-  app.get("/messages/:before", async (req, res) => {
-    const cookies = req.cookies;
-    if (cookies.user) {
-      const userJSON = JSON.parse(cookies.user);
-      const user = await db.user.findUnique({ where: { token: userJSON.token } });
-      if (!user) return res.status(403).send({ message: "Unauthorized." });
-    }
+  app.get("/api/messages/:before", async (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).send({ message: 'Unauthorized.' });
+
+    const user = await db.user.findUnique({ where: { token: authHeader } });
+    if (!user) return res.status(403).send({ message: "Unauthorized." });
   
     const before = +req.params.before;
     if (!before && before !== 0)

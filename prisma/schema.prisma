@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  username  String    @unique
-  password  String
-  salt      String
-  token     String    @unique
-  createdAt BigInt
-  messages  Message[]
+  id          Int       @id @default(autoincrement())
+  username    String    @unique
+  password    String
+  salt        String
+  token       String    @unique
+  createdAt   BigInt
+  messages    Message[]
 }
 
 model Message {
@@ -23,4 +23,10 @@ model Message {
   authorId  Int
   content   String
   createdAt BigInt
+}
+
+model Invite {
+  code    String  @unique
+  userId  Int?
+  open    Boolean @default(true)
 }

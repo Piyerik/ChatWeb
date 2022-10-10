@@ -24,5 +24,3 @@ const registerInput = async () => {
   document.cookie = `id=${user.id}; path=/`;
   window.location.href = "/";
 };
-
-login.addEventListener("click", async () => registerInput());

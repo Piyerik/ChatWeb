@@ -6,16 +6,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="ChatWeb">
-    <meta property="og:description" content="Create a ChatWeb account.">
-    <meta property="og:url" content="https://chatweb-production.up.railway.app/signup">
-    <meta property="og:theme-color" content="#FFFFFF">
-    <title>Sign up</title>
+    <title>ChatWeb | Sign up</title>
 </head>
 <body>
   <div id="center">
     <h1>Sign up</h1>
-    <form onsubmit="return false">
+    <form onsubmit="registerInput(); return false">
       <div class="txt_field">
         <input type="text" required id="username">
         <span></span>
@@ -25,6 +21,11 @@
         <input type="password" required id="password">
         <span></span>
         <label>Password</label>
+      </div>
+      <div class="txt_field">
+        <input type="text" required id="invite">
+        <span></span>
+        <label>Invite code</label>
       </div>
       <p id="error"></p>
       <button id="submit">Sign up</button>

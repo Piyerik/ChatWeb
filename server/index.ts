@@ -21,10 +21,13 @@ const wss = new WebSocketServer({ server });
 ws_(wss);
 
 (async () => {
-  const routes = fs.readdirSync('./api/routes');
-  for (const route of routes) {
-    const fileName = route.slice(0, -3);
-    (await import(`./routes/${fileName}`)).default(app);
+  const routeTypes = fs.readdirSync('./server/routes');
+  for (const routeType of routeTypes) {
+    const routes = fs.readdirSync(`./server/routes/${routeType}`);
+    for (const route of routes) {
+      const fileName = route.slice(0, -3);
+      (await import(`./routes/${routeType}/${fileName}`)).default(app);
+    }
   }
 })();
 

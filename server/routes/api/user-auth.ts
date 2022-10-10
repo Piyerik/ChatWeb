@@ -1,9 +1,9 @@
 import type { Express } from "express";
 import crypto from "crypto";
-import db from "../db";
+import db from "../../db";
 
 export default function (app: Express) {
-  app.post("/user-auth", async (req, res) => {
+  app.post("/api/user-auth", async (req, res) => {
     const { body } = req;
     if (!('username' in body && 'password' in body))
       return res.status(400).send({
