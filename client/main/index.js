@@ -115,6 +115,11 @@ async function main() {
     container.appendChild(msg);
 
     messages.scrollTo(0, messages.scrollHeight);
+    
+    const chatbox_ = document.getElementById('chatbox');
+    if (chatbox_.scrollHeight > 400) return;
+    chatbox_.style.height = 0;
+    chatbox_.style.height = chatbox.scrollHeight + 'px';
   }
 
   chatbox.addEventListener('keypress', async key => {

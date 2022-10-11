@@ -25,18 +25,23 @@
 
   <div id="container">
     <h1>Account Settings</h1>
+    <p>To change your username, edit the username field, type in your password in the verify changes field, and then hit update changes.<br>To change your password, type in a password in the new password field, confirm it, type your password in the verify changes field, and then hit update changes.</p>
+    <br><br>
     <label for="username">Username: </label>
     <input type="text" id="username">
     <br><br>
-    <label for="password">New Password: </label>
+    <label for="password">New password: </label>
     <input type="password" id="password">
+    <br><br>
+    <label for="confirm_password">Confirm new password: </label>
+    <input type="password" id="confirm_password">
+    <br><br>
+    <label for="confirmation">Verify changes with password: </label>
+    <input type="password" id="confirmation">
     <br><br>
     <button id="update">Update changes</button>
     <button id="logout">Log out</button>
     <button id="delete">Delete account</button>
-    <br><br>
-    <label for="confirmation">Password: </label>
-    <input type="password" id="confirmation">
     <p id="error"></p>
   </div>
 
