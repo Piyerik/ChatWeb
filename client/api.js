@@ -1,4 +1,4 @@
-const mode = 'DEV'; // PROD | DEV
+const mode = 'PROD'; // PROD | DEV
 const prodApi = 'https://chatweb-production.up.railway.app/api';
 const devApi = 'http://192.168.0.110:3000/api';
 
