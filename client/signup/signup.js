@@ -2,6 +2,10 @@ const create = document.getElementById("submit");
 const error = document.getElementById("error");
 const inviteRegex = /[a-zA-Z0-9]{6}/;
 
+const params = new URLSearchParams(window.location.search);
+if (params.get('invite'))
+  document.getElementById('invite').value = params.get('invite');
+
 const registerInput = async () => {
   const username = document.getElementById("username").value;
   const password = document.getElementById('password').value;
