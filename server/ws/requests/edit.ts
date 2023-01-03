@@ -63,7 +63,7 @@ export default async function (
   });
 
   wss.clients.forEach((client) => {
-    if (client !== ws && client.readyState == WebSocket.OPEN)
+    if (client.readyState == WebSocket.OPEN)
       client.send(
         Buffer.from(
           JSON.stringify({

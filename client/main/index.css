@@ -26,8 +26,13 @@ button {
   width: 100%;
 }
 
-#messages p {
+#messages div {
   padding: 2px;
+  margin-bottom: 5px;
+}
+
+#messages p {
+  margin: 3px;
 }
 
 #messages p:hover {

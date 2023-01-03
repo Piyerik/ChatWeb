@@ -11,7 +11,7 @@ const logout = document.getElementById('logout');
 update.addEventListener("click", async () => {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById('confirm_password').value;
+  const confirmation = document.getElementById('confirmation').value;
   const error = document.getElementById("error");
 
   if (username.length > 32) {
@@ -29,12 +29,6 @@ update.addEventListener("click", async () => {
 
   if (!changeData.username && !changeData.password) return;
 
-  if (changeData.password && password !== confirmPassword) {
-    error.innerHTML = "Passwords do not match.";
-    return;
-  }
-
-  const confirmation = document.getElementById("confirmation").value;
   const req = await fetch(`${api}/users`, {
     method: "PATCH",
     headers: {
@@ -55,6 +49,7 @@ update.addEventListener("click", async () => {
     return;
   }
 
+  error.innerHTML = "";
   alert("Successfully updated!");
   document.getElementById("password").value = "";
   document.getElementById('confirm_password').value = "";
