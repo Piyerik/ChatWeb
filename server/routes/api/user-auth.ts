@@ -17,7 +17,7 @@ export default function (app: Express) {
       return res.status(401).send({ message: "Invalid username or password." });
 
     const { salt, password, token, id } = user;
-    const hash = crypto.scryptSync(body.password, salt, 64).toString("hex");
+    const hash = crypto.scryptSync(body.password, salt, 16).toString("hex");
     if (password !== hash)
       return res.status(401).send({ message: "Invalid username or password." });
 
