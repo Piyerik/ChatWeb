@@ -41,7 +41,7 @@ export default function (app: Express) {
 
       const token = crypto.randomBytes(16).toString("hex");
       const salt = crypto.randomBytes(16).toString("hex");
-      const hash = crypto.scryptSync(body.password, salt, 64).toString("hex");
+      const hash = crypto.scryptSync(body.password, salt, 16).toString("hex");
 
       const user = await db.user.create({
         data: {
@@ -83,7 +83,7 @@ export default function (app: Express) {
 
       const { salt, password } = user;
       const hash = crypto
-        .scryptSync(body.auth.password, salt, 64)
+        .scryptSync(body.auth.password, salt, 16)
         .toString("hex");
       if (password !== hash)
         return res
@@ -122,7 +122,7 @@ export default function (app: Express) {
         const p_token = crypto.randomBytes(16).toString("hex");
         const p_salt = crypto.randomBytes(16).toString("hex");
         const p_hash = crypto
-          .scryptSync(body.password, p_salt, 64)
+          .scryptSync(body.password, p_salt, 16)
           .toString("hex");
 
         await db.user.update({
@@ -157,7 +157,7 @@ export default function (app: Express) {
           .send({ message: "Invalid username or password." });
 
       const { salt, password } = user;
-      const hash = crypto.scryptSync(body.password, salt, 64).toString("hex");
+      const hash = crypto.scryptSync(body.password, salt, 16).toString("hex");
       if (password !== hash)
         return res
           .status(401)
